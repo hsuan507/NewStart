@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { BehaviorSubject } from 'rxjs/';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -16,6 +17,8 @@ const httpOptions = {
 export class HeroService {
 
   private heroesUrl = 'api/heroes';  // URL to web api
+
+  heroCountChange$ = new BehaviorSubject<number>(0);
 
   constructor(
     private http: HttpClient,
@@ -70,8 +73,11 @@ export class HeroService {
   /** POST: add a new hero to the server */
   addHero (hero: Hero): Observable<Hero> {
     return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
-      tap((hero: Hero) => this.log(`added hero w/ id=${hero.id}`)),
-      catchError(this.handleError<Hero>('addHero'))
+      tap((hero: Hero) => {
+        this.log(`added hero w/ id=${hero.id}`);
+        this.heroCountChange(1);
+      }),
+      catchError(this.handleError<Hero>('addHero')),
     );
   }
 
@@ -81,8 +87,11 @@ export class HeroService {
     const url = `${this.heroesUrl}/${id}`;
 
     return this.http.delete<Hero>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted hero id=${id}`)),
-      catchError(this.handleError<Hero>('deleteHero'))
+      tap(_ => {
+        this.log(`deleted hero id=${id}`);
+        this.heroCountChange(-1);
+      }),
+      catchError(this.handleError<Hero>('deleteHero')),
     );
   }
 
@@ -92,6 +101,11 @@ export class HeroService {
       tap(_ => this.log(`updated hero id=${hero.id}`)),
       catchError(this.handleError<any>('updateHero'))
     );
+  }
+
+  /** Inform hero count change */
+  private heroCountChange(count: number) {
+    this.heroCountChange$.next(count);
   }
 
   /**
