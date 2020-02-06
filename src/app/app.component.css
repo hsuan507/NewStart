@@ -27,3 +27,6 @@ nav a:hover {
 nav a.active {
   color: #039be5;
 }
+div.row-title>h1 {
+  display: inline;
+}

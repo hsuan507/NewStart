@@ -13,10 +13,4 @@ export class MessagesComponent implements OnInit {
   ngOnInit() {
   }
 
-  clear() {
-    let clear = window.confirm('Do you really like to clear all messages?');
-    if (clear) {
-      this.messageService.clear();
-    }
-  }
 }

@@ -1,4 +1,7 @@
-<h1>{{title}}</h1>
+<div class="row-title">
+  <h1>{{title}}</h1>
+  <button class="clear" (click)="messageService.clear(4)">clear top 4 messages</button>
+</div>
 <nav>
   <a routerLink="/cl-dashboard">Dashboard</a>
   <a routerLink="/cl-heroes">Heroes</a>

@@ -8,7 +8,14 @@ export class MessageService {
     this.messages.push(message);
   }
 
-  clear() {
-    this.messages = [];
+  clear(num: number) {
+    if (window.confirm('Do you really like to clear?')) {
+      if (num) {
+        this.messages.splice(0, num);
+      } else {
+        this.messages = [];
+      }
+    }
   }
+
 }
