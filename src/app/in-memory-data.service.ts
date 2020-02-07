@@ -1,4 +1,5 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
+import { Hero } from './hero/hero';
 
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
@@ -15,5 +16,12 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 20, name: 'Tornado' }
     ];
     return {heroes};
+  }
+
+  // issue: https://github.com/angular/angular/issues/22120#issuecomment-419369390
+  // Overrides the genId method to ensure that a hero always has an id.
+  // If the heros array is empty, returns the initial number 1;
+  genId(heroes: Hero[]): number {
+    return heroes.length > 0 ? Math.max(...heroes.map(hero => hero.id)) + 1 : 1;
   }
 }
