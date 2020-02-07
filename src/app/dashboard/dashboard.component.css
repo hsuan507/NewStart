@@ -52,6 +52,16 @@ h4 {
     font-size: 10px;
     max-height: 75px; }
 }
+@media (min-width: 768px) and (max-width: 921px) {
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .col-1-4 {
+    width: 50%;
+  }
+}
 @media (min-width: 922px) {
   .grid {
     width: 100%;
