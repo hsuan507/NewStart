@@ -11,6 +11,7 @@ import { AppRoutingModule }     from './app-routing.module';
 import { AppComponent }         from './app.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { HeroModule } from './hero/hero.module';
+import { RoutingTitleService }  from './routing-title.service';
 import { HeroService }          from './hero/hero.service';
 import { MessageService }       from './message.service';
 import { MessagesComponent }    from './messages/messages.component';
@@ -28,14 +29,14 @@ import { MessagesComponent }    from './messages/messages.component';
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
+      InMemoryDataService, { dataEncapsulation: false, passThruUnknownUrl: true }
     )
   ],
   declarations: [
     AppComponent,
     MessagesComponent,
   ],
-  providers: [ HeroService, MessageService ],
+  providers: [ HeroService, MessageService, RoutingTitleService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
